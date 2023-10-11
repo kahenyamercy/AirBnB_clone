@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-from uuid import uuid4
-from datetime import datetime, date
 """
 Defines class BaseModel
 """
+from uuid import uuid4
+from datetime import datetime
+from . import storage
+
 
 class BaseModel:
     """
@@ -27,6 +29,7 @@ class BaseModel:
                     if key == 'created_at' or key == 'updated_at':
                         setattr(BaseModel, key, datetime.fromisoformat(value))
                     else:
+                        storage.new()
                         setattr(self, key, value)
 
     def __str__(self):
@@ -56,4 +59,5 @@ class BaseModel:
         """
         Updates the class attribute updated_at anytime the instance of the class changes
         """
+        storage.save()
         BaseModel.updated_at = datetime.now()
