@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, date
 """
 Defines class BaseModel
 """
@@ -13,9 +13,30 @@ class BaseModel:
     created_at = datetime.now()
     updated_at = datetime.now()
 
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes an instance with the dictionary respresentation
+        """
+        if kwargs is None:
+            BaseModel.id = str(uuid4())
+            BaseModel.created_at = datetime.now()
+            BaseModel.updated_at = datetime.now()
+        else:
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(BaseModel, key, datetime.fromisoformat(value))
+                    else:
+                        setattr(self, key, value)
+
     def __str__(self):
         new_dict = {key: value for key, value in self.to_dict().items() if key != '__class__'}
-        return f"[{self.__class__.__name__}] ({self.id}) {new_dict}"
+        parsed_time_dict = {**new_dict}
+        for key, value in new_dict.items():
+            if key == 'created_at' or key == 'updated_at':
+                value = datetime.fromisoformat(value).strftime("datetime.datetime(%Y, %m, %d, %H, %M, %S, %f)")
+                parsed_time_dict[key] = value
+        return f"[{self.__class__.__name__}] ({self.id}) {parsed_time_dict}"
 
     def to_dict(self):
         """
@@ -25,8 +46,8 @@ class BaseModel:
         new_dict =  {
                 **self.__dict__,
                 "id": BaseModel.id,
-                "created_at": BaseModel.created_at,
-                "updated_at": BaseModel.updated_at,
+                "created_at": BaseModel.created_at.isoformat(),
+                "updated_at": BaseModel.updated_at.isoformat(),
                 "__class__": self.__class__.__name__
                 }
         return new_dict
