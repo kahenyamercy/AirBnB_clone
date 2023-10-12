@@ -57,18 +57,54 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         args = arg.split()
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
         class_name = self.search_for_class(args[0]);
         if class_name:
+            if len(args) < 2:
+                print("** instance id missing **")
+                return
+
             name_and_id = f"{args[0]}.{args[1]}"
             objects = storage.all()
+
             for key, value in objects.items():
                 if key == name_and_id:
-                    print(objects[key])
                     new_instance = self.class_name_to_class[class_name](**objects[key])
                     print(new_instance)
+                    return
+            print("** no instance found **")
+
+    def do_destroy(self, arg):
+        """
+        Deletes an insatnce based on the class name and id
+        and save the changes into the JSON file
+        """
+        if not arg:
+            print("** class name missing **")
+            return
+        args = arg.split()
+        class_name = self.search_for_class(args[0]);
+        if class_name:
+            if class_name:
+                if len(args) < 2:
+                    print("** instance id missing **")
+                    return
+
+            name_and_id = f"{args[0]}.{args[1]}"
+            objects = storage.all()
+            filtered_objects = {}
+            instance_found = False
+
+            for key, value in objects.items():
+                if key == name_and_id:
+                    instance_found = True
+                else:
+                    filtered_objects[key] = value
+            if not instance_found:
+                print("** no instance found **")
+                print(objects)
+                print(filtered_objects)
+            storage.objects = filtered_objects # replace the __objects with the filtered to effect changes when saved
+            storage.save()
 
     def search_for_class(self, name):
         for key, value in self.class_name_to_class.items():

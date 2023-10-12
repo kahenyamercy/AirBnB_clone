@@ -20,6 +20,12 @@ class FileStorage:
         """
         return self.__objects
 
+    def objects(self, obj):
+        """
+        Set the __objects by replacing it with a new value
+        """
+        self.__objects = obj
+
     def new(self, obj):
         """
         Sets in __objects attribute
