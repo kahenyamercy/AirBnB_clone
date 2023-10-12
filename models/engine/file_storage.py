@@ -27,15 +27,18 @@ class FileStorage:
         Args:
             obj (object): An object with key <obj class name>.id
         """
-        key = f"{self.__class__.__name__}.{self.id}"
+        key = f"{obj['__class__']}.{obj['id']}"
         self.__objects[key] = obj
 
     def save(self):
         """
         Serializes __objects to the JSON file
         """
+        serialized_objects = {}
+        for key, value in self.__objects.items():
+            serialized_objects[key] = value
         with open(FileStorage.__file_path, 'a', encoding='utf-8') as file:
-            json.dump(self.all, file)
+            json.dump(serialized_objects, file)
 
     def reload(self):
         """

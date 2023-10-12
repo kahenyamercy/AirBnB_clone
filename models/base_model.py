@@ -19,17 +19,17 @@ class BaseModel:
         """
         Initializes an instance with the dictionary respresentation
         """
-        if kwargs is None:
+        if not kwargs:
             BaseModel.id = str(uuid4())
             BaseModel.created_at = datetime.now()
             BaseModel.updated_at = datetime.now()
+            storage.new(self.to_dict())  # add the obj for saving to json file later
         else:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key == 'created_at' or key == 'updated_at':
                         setattr(BaseModel, key, datetime.fromisoformat(value))
                     else:
-                        storage.new()
                         setattr(self, key, value)
 
     def __str__(self):
@@ -59,5 +59,5 @@ class BaseModel:
         """
         Updates the class attribute updated_at anytime the instance of the class changes
         """
-        storage.save()
         BaseModel.updated_at = datetime.now()
+        storage.save() # save the instances to json file
