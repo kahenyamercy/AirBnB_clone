@@ -34,11 +34,9 @@ class FileStorage:
         """
         Serializes __objects to the JSON file
         """
-        serialized_objects = {}
-        for key, value in self.__objects.items():
-            serialized_objects[key] = value
-        with open(FileStorage.__file_path, 'a', encoding='utf-8') as file:
-            json.dump(serialized_objects, file)
+        serialized_objects = json.dumps(self.__objects)
+        with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
+            file.write(serialized_objects)
 
     def reload(self):
         """
@@ -48,6 +46,7 @@ class FileStorage:
             (obj): returns __objects from a JSON file
         """
         if os.path.exists(FileStorage.__file_path):
+            print("File exists!")
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
-                return json.load(file)
+                self.__objects = json.load(file)
 
