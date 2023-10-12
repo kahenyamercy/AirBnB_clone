@@ -46,7 +46,6 @@ class FileStorage:
             (obj): returns __objects from a JSON file
         """
         if os.path.exists(FileStorage.__file_path):
-            print("File exists!")
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
                 self.__objects = json.load(file)
 
