@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-from uuid import uuid4
-from datetime import datetime, date
 """
 Defines class BaseModel
 """
+from uuid import uuid4
+from datetime import datetime
+from . import storage
+
 
 class BaseModel:
     """
@@ -17,10 +19,11 @@ class BaseModel:
         """
         Initializes an instance with the dictionary respresentation
         """
-        if kwargs is None:
+        if not kwargs:
             BaseModel.id = str(uuid4())
             BaseModel.created_at = datetime.now()
             BaseModel.updated_at = datetime.now()
+            storage.new(self.to_dict())  # add the obj for saving to json file later
         else:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -57,3 +60,4 @@ class BaseModel:
         Updates the class attribute updated_at anytime the instance of the class changes
         """
         BaseModel.updated_at = datetime.now()
+        storage.save() # save the instances to json file
