@@ -2,12 +2,34 @@
 """unit testing"""
 import unittest
 from models.base_model import BaseModel
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 class TestBaseModel(unittest.TestCase):
     """
     Unit tests for BaseModel class.
     """
+
+    def test_instance_creation(self):
+        """
+        Test if a BaseModel instance is created with the expected attributes.
+        """
+        obj = BaseModel()
+        self.assertIsInstance(obj, BaseModel)
+        self.assertTrue(hasattr(obj, 'id'))
+        self.assertTrue(hasattr(obj, 'created_at'))
+        self.assertTrue(hasattr(obj, 'updated_at'))
+        self.assertIsInstance(obj.created_at, datetime)
+        self.assertIsInstance(obj.updated_at, datetime)
+
+    def test_str_method(self):
+        """
+        Test the __str__ method of the BaseModel class.
+        """
+        obj = BaseModel()
+        string_representation = str(obj)
+        self.assertIsInstance(string_representation, str)
+        self.assertIn("[BaseModel]", string_representation)
+        self.assertIn(obj.id, string_representation)
 
     def setUp(self):
         """
