@@ -105,6 +105,29 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print ("** no instance found **")
 
+    def do_all(self, arg):
+        """
+        Prints all string representation of all instances based
+        or not on the class name
+        """
+        objects = storage.all()
+        if arg:
+            args = arg.split()
+            class_name = self.search_for_class(args[0])
+            if class_name:
+                for key, value in objects.items():
+                    name = key.split('.')[0]
+                    if name == class_name:
+                        new_instance = self.class_name_to_class[class_name](**value)
+                        print(new_instance)
+        else:
+            for key, value in objects.items():
+                name = key.split('.')[0]
+                new_instance = self.class_name_to_class[name](**value)
+                print(new_instance)
+                
+
+
     def search_for_class(self, name):
         for key, value in self.class_name_to_class.items():
             if name == key:
