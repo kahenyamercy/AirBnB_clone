@@ -132,6 +132,7 @@ class HBNBCommand(cmd.Cmd):
         or not on the class name
         """
         objects = storage.all()
+        instance_str_list = []
         if arg:
             args = arg.split()
             class_name = self.search_for_class(args[0])
@@ -140,12 +141,14 @@ class HBNBCommand(cmd.Cmd):
                     name = key.split('.')[0]
                     if name == class_name:
                         new_instance = self.class_name_to_class[class_name](**value)
-                        print(new_instance)
+                        instance_str_list.append(str(new_instance))
+                print(instance_str_list)
         else:
             for key, value in objects.items():
                 name = key.split('.')[0]
                 new_instance = self.class_name_to_class[name](**value)
-                print(new_instance)
+                instance_str_list.append(str(new_instance))
+            print(instance_str_list)
 
 
     def do_update(self, arg):
