@@ -20,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
     class_name_to_class = {
             "BaseModel": BaseModel,
             "User": User,
-            "Place": Place.
+            "Place": Place,
             "State": State,
             "City": City,
             "Review": Review,
@@ -40,6 +40,15 @@ class HBNBCommand(cmd.Cmd):
         """
         print()
         return True
+
+    def default(self, line):
+        """
+        Handles other cases where users use valid syntax
+        which may not be necessarily commands
+        """
+        name, method = line.split('.')
+        if method == 'all()':
+            self.do_all(name)
 
     def do_create(self, arg):
         """
@@ -182,8 +191,6 @@ class HBNBCommand(cmd.Cmd):
 
                     else:
                         print("** no instance found **")
-
-
 
     def search_for_class(self, name):
         for key, value in self.class_name_to_class.items():
