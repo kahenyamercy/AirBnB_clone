@@ -48,7 +48,11 @@ class HBNBCommand(cmd.Cmd):
         """
         name, method = line.split('.')
         if method == 'all()':
-            self.do_all(name)
+            instance_str_list = self.get_instance_list(name)
+            print('[', end="")
+            for i in range(len(instance_str_list)):
+                print(f"{instance_str_list[i]}", end=" " if i != len(instance_str_list) - 1 else "")
+            print(']')
 
     def do_create(self, arg):
         """
@@ -131,23 +135,8 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name
         """
-        objects = storage.all()
-        instance_str_list = []
-        if arg:
-            args = arg.split()
-            class_name = self.search_for_class(args[0])
-            if class_name:
-                for key, value in objects.items():
-                    name = key.split('.')[0]
-                    if name == class_name:
-                        new_instance = self.class_name_to_class[class_name](**value)
-                        instance_str_list.append(str(new_instance))
-                print(instance_str_list)
-        else:
-            for key, value in objects.items():
-                name = key.split('.')[0]
-                new_instance = self.class_name_to_class[name](**value)
-                instance_str_list.append(str(new_instance))
+        instance_str_list = self.get_instance_list(arg)
+        if instance_str_list:
             print(instance_str_list)
 
 
@@ -202,6 +191,27 @@ class HBNBCommand(cmd.Cmd):
         print("** class doesn't exist **")
         return
 
+    def get_instance_list(self, arg):
+        """
+        """
+        objects = storage.all()
+        instance_str_list = []
+        if arg:
+            args = arg.split()
+            class_name = self.search_for_class(args[0])
+            if class_name:
+                for key, value in objects.items():
+                    name = key.split('.')[0]
+                    if name == class_name:
+                        new_instance = self.class_name_to_class[class_name](**value)
+                        instance_str_list.append(str(new_instance))
+                return instance_str_list
+        else:
+            for key, value in objects.items():
+                name = key.split('.')[0]
+                new_instance = self.class_name_to_class[name](**value)
+                instance_str_list.append(str(new_instance))
+            return instance_str_list
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
