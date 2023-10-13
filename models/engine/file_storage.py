@@ -20,6 +20,12 @@ class FileStorage:
         """
         return self.__objects
 
+    def objects(self, obj):
+        """
+        Set the __objects by replacing it with a new value
+        """
+        self.__objects = obj
+
     def new(self, obj):
         """
         Sets in __objects attribute
@@ -46,7 +52,6 @@ class FileStorage:
             (obj): returns __objects from a JSON file
         """
         if os.path.exists(FileStorage.__file_path):
-            print("File exists!")
             with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
                 self.__objects = json.load(file)
 

@@ -60,4 +60,5 @@ class BaseModel:
         Updates the class attribute updated_at anytime the instance of the class changes
         """
         BaseModel.updated_at = datetime.now()
+        storage.new(self.to_dict())
         storage.save() # save the instances to json file
