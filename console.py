@@ -125,7 +125,52 @@ class HBNBCommand(cmd.Cmd):
                 name = key.split('.')[0]
                 new_instance = self.class_name_to_class[name](**value)
                 print(new_instance)
-                
+
+
+    def do_update(self, arg):
+        """
+        Updates an instance based on the class name and id
+        by adding or updating attribute.
+        The changes are then saved the the JSON file
+        """
+        if not arg:
+            print("** class name missing **")
+        else:
+            args = arg.split()
+            class_name = self.search_for_class(args[0])
+            if class_name:
+                if len(args) < 2:
+                    print("** instance id missing **")
+                else:
+                    objects = storage.all()
+                    updated_objects = {}
+                    instance_found = False
+                    name_and_id = f"{args[0]}.{args[1]}"
+                    for key, value in objects.items():
+                        if key == name_and_id:
+                            instance_found = True
+                    if instance_found:
+                        if len(args) < 3:
+                            print("** attribute name missing **")
+                        else:
+                            if len(args) < 4:
+                                print("** value missing **")
+                            else:
+                                for key_name, value_obj in objects.items():
+                                    if key_name == name_and_id:
+                                        new_val_obj = {
+                                                **value_obj,
+                                                args[2]: args[3]
+                                                }
+                                        updated_objects[key_name] = new_val_obj
+                                    else:
+                                        updated_objects[key_name] = value_obj
+                                storage.objects(updated_objects)
+                                storage.save()
+
+                    else:
+                        print("** no instance found **")
+
 
 
     def search_for_class(self, name):
