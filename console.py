@@ -99,12 +99,11 @@ class HBNBCommand(cmd.Cmd):
                     instance_found = True
                 else:
                     filtered_objects[key] = value
-            if not instance_found:
-                print("** no instance found **")
-                print(objects)
-                print(filtered_objects)
-            storage.objects = filtered_objects # replace the __objects with the filtered to effect changes when saved
-            storage.save()
+            if instance_found:
+                storage.objects(filtered_objects) # replace the __objects with the filtered to effect changes when save
+                storage.save()
+            else:
+                print ("** no instance found **")
 
     def search_for_class(self, name):
         for key, value in self.class_name_to_class.items():
