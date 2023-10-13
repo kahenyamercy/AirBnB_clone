@@ -53,6 +53,9 @@ class HBNBCommand(cmd.Cmd):
             for i in range(len(instance_str_list)):
                 print(f"{instance_str_list[i]}", end=" " if i != len(instance_str_list) - 1 else "")
             print(']')
+        elif method == 'count()':
+            instance_count = len(self.get_instance_list(name))
+            print(instance_count)
 
     def do_create(self, arg):
         """
