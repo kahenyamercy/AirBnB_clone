@@ -5,6 +5,11 @@ Entry point of the command interpreter
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
@@ -14,7 +19,12 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     class_name_to_class = {
             "BaseModel": BaseModel,
-            "User": User
+            "User": User,
+            "Place": Place.
+            "State": State,
+            "City": City,
+            "Review": Review,
+            "Amenity": Amenity
             }
 
     def do_quit(self, line):
