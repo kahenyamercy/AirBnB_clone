@@ -4,6 +4,7 @@ Entry point of the command interpreter
 """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
@@ -12,7 +13,8 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = '(hbnb) '
     class_name_to_class = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User
             }
 
     def do_quit(self, line):
@@ -177,7 +179,7 @@ class HBNBCommand(cmd.Cmd):
         for key, value in self.class_name_to_class.items():
             if name == key:
                 return key
-            print("** class doesn't exist **")
+        print("** class doesn't exist **")
         return
 
 
