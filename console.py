@@ -3,6 +3,7 @@
 Entry point of the command interpreter
 """
 import cmd
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -46,16 +47,27 @@ class HBNBCommand(cmd.Cmd):
         Handles other cases where users use valid syntax
         which may not be necessarily commands
         """
-        name, method = line.split('.')
-        if method == 'all()':
-            instance_str_list = self.get_instance_list(name)
-            print('[', end="")
-            for i in range(len(instance_str_list)):
-                print(f"{instance_str_list[i]}", end=" " if i != len(instance_str_list) - 1 else "")
-            print(']')
-        elif method == 'count()':
-            instance_count = len(self.get_instance_list(name))
-            print(instance_count)
+        show_pattern = r'(\w+)\.(\w+)\(([\w-]+)\)'
+        match_show = re.match(show_pattern, line)
+        if match_show:
+            class_name = match_show.group(1)
+            method = match_show.group(2)
+            class_id = match_show.group(3)
+            if method == 'show':
+                new_line = f"{class_name} {class_id}"
+                self.do_show(new_line)
+        else:
+            name, method = line.split('.')
+            if method == 'all()':
+                instance_str_list = self.get_instance_list(name)
+                if len(instance_str_list) > 0:
+                    print('[', end="")
+                    for i in range(len(instance_str_list)):
+                        print(f"{instance_str_list[i]}", end=" " if i != len(instance_str_list) - 1 else "")
+                        print(']')
+            elif method == 'count()':
+                instance_count = len(self.get_instance_list(name))
+                print(instance_count)
 
     def do_create(self, arg):
         """
@@ -208,7 +220,7 @@ class HBNBCommand(cmd.Cmd):
                     if name == class_name:
                         new_instance = self.class_name_to_class[class_name](**value)
                         instance_str_list.append(str(new_instance))
-                return instance_str_list
+            return instance_str_list
         else:
             for key, value in objects.items():
                 name = key.split('.')[0]
