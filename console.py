@@ -48,7 +48,9 @@ class HBNBCommand(cmd.Cmd):
         which may not be necessarily commands
         """
         show_pattern = r'(\w+)\.(\w+)\(([\w\"-]+)\)'
+        update_pattern = r'(\w+)\.(\w+)\(["\']([\w-]+)["\'],\s*["\']([\w-]+)["\'],\s*([\w"-]+)\)'
         match_show = re.match(show_pattern, line)
+        match_update = re.match(update_pattern, line)
         if match_show:
             class_name = match_show.group(1)
             method = match_show.group(2)
@@ -58,7 +60,21 @@ class HBNBCommand(cmd.Cmd):
                 self.do_show(new_line)
             elif method == 'destroy':
                 self.do_destroy(new_line)
-
+        elif match_update:
+            class_name = match_update.group(1)
+            method = match_update.group(2)
+            class_id = match_update.group(3)
+            attr = match_update.group(4)
+            val = match_update.group(5)
+            print(class_name)
+            print(method)
+            print(class_id)
+            print(attr)
+            print(val)
+            if method == 'update':
+                val = val.replace('"', '')
+                new_line = f"{class_name} {class_id} {attr} {val}"
+                self.do_update(new_line)
         else:
             name, method = line.split('.')
             if method == 'all()':
