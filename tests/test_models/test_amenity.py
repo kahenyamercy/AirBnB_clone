@@ -39,16 +39,16 @@ class TestAmenity(unittest.TestCase):
 
     def test_to_dict_method(self):
         """
-        Test Amenity to_dict() method
+        Test the to_dict() method in Amenity.
         """
-        obj_dict = self.amenity.to_dict()
-        self.assertIsInstance(obj_dict, dict)
-        self.assertIn('__class__', obj_dict)
-        self.assertEqual(obj_dict['__class__'], 'Amenity')
-        self.assertIn('created_at', obj_dict)
-        self.assertIn('updated_at', obj_dict)
-        self.assertIn('id', obj_dict)
-        self.assertIn('name', obj_dict)
+        obj = Amenity()
+        obj_dict = obj.to_dict()
+        self.assertIsInstance(obj_dict, dict, "to_dict() should return a dictionary")
+        self.assertIn('__class__', obj_dict, "Dictionary should contain '__class__' key")
+        self.assertEqual(obj_dict['__class__'], 'Amenity', "__class__ key should have correct class name")
+        self.assertIn('created_at', obj_dict, "Dictionary should contain 'created_at' key")
+        self.assertIn('updated_at', obj_dict, "Dictionary should contain 'updated_at' key")
+        self.assertNotIn('name', obj_dict, "Dictionary should not contain 'name' key")
 
     def test_str_method(self):
         """

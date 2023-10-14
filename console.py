@@ -15,6 +15,7 @@ from models.review import Review
 from models.amenity import Amenity
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Command Interpreter for the AirBnB_clone
@@ -128,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         args = arg.split()
-        class_name = self.search_for_class(args[0]);
+        class_name = self.search_for_class(args[0])
         if class_name:
             if len(args) < 2:
                 print("** instance id missing **")
@@ -153,7 +154,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         args = arg.split()
-        class_name = self.search_for_class(args[0]);
+        class_name = self.search_for_class(args[0])
         if class_name:
             if class_name:
                 if len(args) < 2:
@@ -176,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.objects(filtere_objects)
                 storage.save()
             else:
-                print ("** no instance found **")
+                print("** no instance found **")
 
     def do_all(self, arg):
         """
@@ -186,7 +187,6 @@ class HBNBCommand(cmd.Cmd):
         instance_str_list = self.get_instance_list(arg)
         if instance_str_list:
             print(instance_str_list)
-
 
     def do_update(self, arg):
         """
@@ -260,6 +260,7 @@ class HBNBCommand(cmd.Cmd):
                 new_instance = self.class_name_to_class[name](**value)
                 instance_str_list.append(str(new_instance))
             return instance_str_list
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
