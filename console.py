@@ -47,13 +47,13 @@ class HBNBCommand(cmd.Cmd):
         Handles other cases where users use valid syntax
         which may not be necessarily commands
         """
-        show_pattern = r'(\w+)\.(\w+)\(([\w-]+)\)'
+        show_pattern = r'(\w+)\.(\w+)\(([\w\"-]+)\)'
         match_show = re.match(show_pattern, line)
         if match_show:
             class_name = match_show.group(1)
             method = match_show.group(2)
             class_id = match_show.group(3)
-            new_line = f"{class_name} {class_id}"
+            new_line = f"{class_name} {class_id[1:-1]}"
             if method == 'show':
                 self.do_show(new_line)
             elif method == 'destroy':
