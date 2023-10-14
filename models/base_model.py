@@ -23,7 +23,7 @@ class BaseModel:
             BaseModel.id = str(uuid4())
             BaseModel.created_at = datetime.now()
             BaseModel.updated_at = datetime.now()
-            storage.new(self.to_dict())  # add the obj for saving to json file later
+            storage.new(self.to_dict())
         else:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -33,11 +33,14 @@ class BaseModel:
                         setattr(self, key, value)
 
     def __str__(self):
-        new_dict = {key: value for key, value in self.to_dict().items() if key != '__class__'}
+        items = self.to_dict().items()
+        new_dict = {key: value for key, value in items if key != '__class__'}
         parsed_time_dict = {**new_dict}
         for key, value in new_dict.items():
             if key == 'created_at' or key == 'updated_at':
-                value = datetime.fromisoformat(value).strftime("datetime.datetime(%Y, %m, %d, %H, %M, %S, %f)")
+                formt = "datetime.datetime(%Y, %m, %d, %H, %M, %S, %f)"
+                value = datetime.fromisoformat(value)
+                value = value.strftime(formt)
                 parsed_time_dict[key] = value
         return f"[{self.__class__.__name__}] ({self.id}) {parsed_time_dict}"
 
@@ -45,8 +48,7 @@ class BaseModel:
         """
         Converts the class to a dictionary
         """
-
-        new_dict =  {
+        new_dict = {
                 **self.__dict__,
                 "id": BaseModel.id,
                 "created_at": BaseModel.created_at.isoformat(),
@@ -57,8 +59,10 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the class attribute updated_at anytime the instance of the class changes
+        Updates class attribute updated_at
+        anytime the instance of class changes
         """
         BaseModel.updated_at = datetime.now()
         storage.new(self.to_dict())
-        storage.save() # save the instances to json file
+        # save the instances to json file
+        storage.save()
