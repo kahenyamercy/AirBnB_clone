@@ -36,6 +36,9 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
+    def emptyline(self):
+        """Do nothing when an empty line is entered"""
+        pass
 
     def do_EOF(self, line):
         """
