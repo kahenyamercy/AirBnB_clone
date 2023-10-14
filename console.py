@@ -49,9 +49,9 @@ class HBNBCommand(cmd.Cmd):
         Handles other cases where users use valid syntax
         which may not be necessarily commands
         """
-        show_pattern = r'(\w+)\.(\w+)\(([\w\"-]+)\)'
-        update_pattern = r'(\w+)\.(\w+)\(["\']([\w-]+)["\'],\s*["\']([\w-]+)["\'],\s*([\w"-]+)\)'
-        update_dict_pattern = r'(\w+)\.(\w+)\("([0-9a-fA-F\-]+)",\s*({.*?})\)'
+        show_pattern = r'(\w+)\.(\w+)\(([\w"\'-]+)\)'
+        update_pattern = r'(\w+)\.(\w+)\(\'([0-9a-fA-F\-]+)\',\s*["\']([^"\']+)["\'],\s*["\']([^"\']+)["\']\)'
+        update_dict_pattern = r'(\w+)\.(\w+)\(["\']([0-9a-fA-F\-]+)["\'],\s*({.*?})\)'
         match_show = re.match(show_pattern, line)
         match_update = re.match(update_pattern, line)
         match_update_dict = re.search(update_dict_pattern, line)
@@ -65,13 +65,13 @@ class HBNBCommand(cmd.Cmd):
             elif method == 'destroy':
                 self.do_destroy(new_line)
         elif match_update:
+            print("updating using key/val")
             class_name = match_update.group(1)
             method = match_update.group(2)
             class_id = match_update.group(3)
             attr = match_update.group(4)
             val = match_update.group(5)
             if method == 'update':
-                val = val.replace('"', '')
                 new_line = f"{class_name} {class_id} {attr} {val}"
                 self.do_update(new_line)
         elif match_update_dict:
@@ -83,7 +83,6 @@ class HBNBCommand(cmd.Cmd):
             if method == 'update':
                 for key, val in dict_obj.items():
                     new_line = f"{class_name} {class_id} {key} {val}"
-                    print(new_line)
                     self.do_update(new_line)
         else:
             name, method = line.split('.')
@@ -169,7 +168,9 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     filtered_objects[key] = value
             if instance_found:
-                storage.objects(filtered_objects) # replace the __objects with the filtered to effect changes when save
+                # replace the __objects with the filtered
+                # to effect changes when save
+                storage.objects(filtere_objects)
                 storage.save()
             else:
                 print ("** no instance found **")
