@@ -15,6 +15,7 @@ from models.review import Review
 from models.amenity import Amenity
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Command Interpreter for the AirBnB_clone
@@ -54,7 +55,9 @@ class HBNBCommand(cmd.Cmd):
         """
         show_pattern = r'(\w+)\.(\w+)\(([\w"\'-]+)\)'
         update_pattern = r'(\w+)\.(\w+)\(\'([0-9a-fA-F\-]+)\',\s*["\']([^"\']+)["\'],\s*["\']([^"\']+)["\']\)'
-        update_dict_pattern = r'(\w+)\.(\w+)\(["\']([0-9a-fA-F\-]+)["\'],\s*({.*?})\)'
+        update_dict_pattern = r"""
+                                (\w+)\.(\w+)\(["\']([0-9a-fA-F\-]+)["\'],\s*({.*?})\)'
+                                """
         match_show = re.match(show_pattern, line)
         match_update = re.match(update_pattern, line)
         match_update_dict = re.search(update_dict_pattern, line)
