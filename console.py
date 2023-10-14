@@ -53,9 +53,12 @@ class HBNBCommand(cmd.Cmd):
             class_name = match_show.group(1)
             method = match_show.group(2)
             class_id = match_show.group(3)
+            new_line = f"{class_name} {class_id}"
             if method == 'show':
-                new_line = f"{class_name} {class_id}"
                 self.do_show(new_line)
+            elif method == 'destroy':
+                self.do_destroy(new_line)
+
         else:
             name, method = line.split('.')
             if method == 'all()':
