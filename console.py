@@ -4,6 +4,8 @@ Entry point of the command interpreter
 """
 import cmd
 import re
+import json
+import ast
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -49,8 +51,10 @@ class HBNBCommand(cmd.Cmd):
         """
         show_pattern = r'(\w+)\.(\w+)\(([\w\"-]+)\)'
         update_pattern = r'(\w+)\.(\w+)\(["\']([\w-]+)["\'],\s*["\']([\w-]+)["\'],\s*([\w"-]+)\)'
+        update_dict_pattern = r'(\w+)\.(\w+)\("([0-9a-fA-F\-]+)",\s*({.*?})\)'
         match_show = re.match(show_pattern, line)
         match_update = re.match(update_pattern, line)
+        match_update_dict = re.search(update_dict_pattern, line)
         if match_show:
             class_name = match_show.group(1)
             method = match_show.group(2)
@@ -66,15 +70,21 @@ class HBNBCommand(cmd.Cmd):
             class_id = match_update.group(3)
             attr = match_update.group(4)
             val = match_update.group(5)
-            print(class_name)
-            print(method)
-            print(class_id)
-            print(attr)
-            print(val)
             if method == 'update':
                 val = val.replace('"', '')
                 new_line = f"{class_name} {class_id} {attr} {val}"
                 self.do_update(new_line)
+        elif match_update_dict:
+            class_name = match_update_dict.group(1)
+            method = match_update_dict.group(2)
+            class_id = match_update_dict.group(3)
+            content_within_braces = match_update_dict.group(4)
+            dict_obj = ast.literal_eval(content_within_braces)
+            if method == 'update':
+                for key, val in dict_obj.items():
+                    new_line = f"{class_name} {class_id} {key} {val}"
+                    print(new_line)
+                    self.do_update(new_line)
         else:
             name, method = line.split('.')
             if method == 'all()':
