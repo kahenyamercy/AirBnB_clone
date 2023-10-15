@@ -14,7 +14,7 @@ class Place(BaseModel):
                         city id
         user_id (str): Public class attr to store the user id
         name (str): Public class attr to store place name
-        description (str): Public class attr to store 
+        description (str): Public class attr to store
                            place descritpion
         number_rooms (int): Public class attr to store no of rooms
         number_bathrooms (int): Public class attr to store no
