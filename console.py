@@ -96,6 +96,8 @@ class HBNBCommand(cmd.Cmd):
             elif method == 'count()':
                 instance_count = len(self.get_instance_list(name))
                 print(instance_count)
+            else:
+                print("**not found**")
 
     def do_create(self, arg):
         """
