@@ -174,7 +174,7 @@ class HBNBCommand(cmd.Cmd):
             if instance_found:
                 # replace the __objects with the filtered
                 # to effect changes when save
-                storage.objects(filtere_objects)
+                storage.objects(filtered_objects)
                 storage.save()
             else:
                 print("** no instance found **")
