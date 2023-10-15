@@ -1,12 +1,12 @@
 # AirBnB_clone - The Console
 
-### AirBnB_clone Description
+## AirBnB_clone Description
 
-`AirBnB` is an web application that helps people discover their perfect homes. You can view the source of idea by clicking ![here](https://www.airbnb.com/). Now the `AirBnB_clone` is a learning project at ALX with an aim to help us utilize the skills we have so far learnt by collectively and collaboratively build a replica of the application.
+`AirBnB` is a web application that helps people discover their perfect homes. You can view the source of idea by clicking [airbnb.com](https://www.airbnb.com/). Now the `AirBnB_clone` is a learning project at ALX with an aim to help us utilize the skills we have so far learnt by collectively and collaboratively build a replica of the application.
 
 This project being a full web application, it have been divided into various part, the console being the first one, where we now deal with managing the data for this application. Now let us see what `The Console` part entails.
 
-### The Console
+## The Console
 The console part involves having an interactive console (a command interpreter) that will help us interact with the data. Basically, the console we enable us to perform various `CRUD` operations.
 
 In this part, we use Python skilss to effectively manage data needed in `AirBnB` application by defining the following models:
@@ -21,7 +21,7 @@ In this part, we use Python skilss to effectively manage data needed in `AirBnB`
 
 In this part, we are utilizing file storage (JSON file) to store our data. 
 
-### Command Interpreter
+## Command Interpreter
 
 The command interpreter allows users to:
 - Create: Instantiate new objects such as User, Place, etc.
@@ -31,7 +31,7 @@ The command interpreter allows users to:
 - Destroy: Delete an object.
 
 
-### Starting the Command Interpreter
+## Starting the Command Interpreter
 1. Clone the Repository: 
 ```
 git clone https://github.com/your-username/airbnb-clone.git
@@ -46,9 +46,9 @@ cd airbnb-clone
 ./console.py
 ```
 
-### Using Command Interpreter
+## Using Command Interpreter
 
-##### Creating new object
+### Creating new object
 To create a new instance of any of the classes use the following syntax `create <class name>`
 Example usage
 ```
@@ -56,7 +56,7 @@ create User
 ```
 The `<class name>` must be among the defined models of the project.
 
-##### Retrieving an Object
+### Retrieving an Object
 To get a string representation of an certain instance based on the id use `show <class name> <id>`
 Example usage:
 ```
@@ -70,7 +70,7 @@ User.show("3304c837-fd91-4d4b-b93a-2ebb8669d6b7")
 ```
 > Note that the second format requires you to wrap the `id` in quotes `"" or ''`
 
-##### Retrieving all objects
+### Retrieving all objects
 To retrieve all the instances use the below command
 ```
 all
@@ -85,7 +85,7 @@ Alternatively, you can use the format `<class name>.all()` to retrieve all insta
 User.all()
 ```
 
-##### Updating an Object
+### Updating an Object
 To update an object use `update <class name> <id> <attribute name> "<attribute value>"`
 Example usage
 ```
@@ -105,7 +105,7 @@ Example usage
 User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", {'first_name': "Wamae", "age": 20})
 ```
 
-##### Destroying an Object
+### Destroying an Object
 To destroy an object use `destroy <class name> <id>`
 Example usage
 ```
@@ -116,7 +116,7 @@ Alternatively, you can use the format `<class name>.destroy(<id>)`
 User.destroy("3304c837-fd91-4d4b-b93a-2ebb8669d6b7")
 ```
 
-##### Getting class instances count
+### Getting class instances count
 To get to know how many instance of a certain class you have, use `<class name>.count()`
 Example use
 ```
