@@ -1,8 +1,12 @@
 footer {
-    bottom: 0;
+    background-color: white; 
     height: 60px;
+    width: 100%;
+    border-top: 1xp solid #cccccc
     text-align: center;
-    line-height: 60px;
-    background-color: #000;
-    color: white;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
 }

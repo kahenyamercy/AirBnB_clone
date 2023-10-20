@@ -5,18 +5,3 @@ body {
     font-size: 14px;
     color: #484848;
 }
-
-footer, header {
-    width: 100%;
-    border: 1px solid #CCCCCC;
-    position: fixed;
-}
-
-footer {
-    bottom: 0;
-    height: 60px;
-    text-align: center;
-    line-height: 60px;
-    background-color: #000;
-    color: white;
-}
